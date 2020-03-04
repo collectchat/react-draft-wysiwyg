@@ -38,7 +38,7 @@ class Embedded extends Component {
       expanded: this.signalExpanded,
     });
     this.signalExpanded = false;
-  }
+  };
 
   doExpand: Function = (): void => {
     this.setState({
@@ -53,30 +53,27 @@ class Embedded extends Component {
   };
 
   addEmbeddedLink: Function = (embeddedLink, height, width): void => {
-
-
-    if (embeddedLink.indexOf("youtube") >= 0) {
-      embeddedLink = embeddedLink.replace("watch?v=","embed/");
-      embeddedLink = embeddedLink.replace("/watch/", "/embed/");
-      embeddedLink = embeddedLink.replace("youtu.be/","youtube.com/embed/");
-    } else if(embeddedLink.indexOf("vimeo") >= 0) {
-      embeddedLink = embeddedLink.replace("vimeo.com/","player.vimeo.com/video/");
-    } else if(embeddedLink.indexOf("facebook") >= 0) {
-      embeddedLink = embeddedLink.replace("https://www.facebook.com","https://www.facebook.com/plugins/video.php?href=https://www.facebook.com");
-    } else if(embeddedLink.indexOf("instagram") >= 0) {
-      embeddedLink = embeddedLink.split('?')[0].replace(/\/$/, "") + '/embed';
+    if (embeddedLink.indexOf('youtube') >= 0) {
+      embeddedLink = embeddedLink.replace('watch?v=', 'embed/');
+      embeddedLink = embeddedLink.replace('/watch/', '/embed/');
+      embeddedLink = embeddedLink.replace('youtu.be/', 'youtube.com/embed/');
+    } else if (embeddedLink.indexOf('vimeo') >= 0) {
+      embeddedLink = embeddedLink.replace('vimeo.com/', 'player.vimeo.com/video/');
+    } else if (embeddedLink.indexOf('facebook') >= 0) {
+      embeddedLink = embeddedLink.replace(
+        'https://www.facebook.com',
+        'https://www.facebook.com/plugins/video.php?href=https://www.facebook.com',
+      );
+    } else if (embeddedLink.indexOf('instagram') >= 0) {
+      embeddedLink = `${embeddedLink.split('?')[0].replace(/\/$/, '')}/embed`;
     }
-    
+    console.log(embeddedLink);
     const { editorState, onChange } = this.props;
     const entityKey = editorState
       .getCurrentContent()
       .createEntity('EMBEDDED_LINK', 'MUTABLE', { src: embeddedLink, height, width })
       .getLastCreatedEntityKey();
-    const newEditorState = AtomicBlockUtils.insertAtomicBlock(
-      editorState,
-      entityKey,
-      ' ',
-    );
+    const newEditorState = AtomicBlockUtils.insertAtomicBlock(editorState, entityKey, ' ');
     onChange(newEditorState);
     this.doCollapse();
   };
