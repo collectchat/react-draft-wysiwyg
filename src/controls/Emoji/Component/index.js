@@ -35,7 +35,8 @@ class LayoutComponent extends Component {
             className="rdw-emoji-icon"
             alt=""
             onClick={this.onChange}
-          >{emoji}</span>))
+            dangerouslySetInnerHTML={emoji}
+          ></span>))
         }
       </div>
     );
